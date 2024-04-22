@@ -303,11 +303,11 @@ class Vis(object):
     def preprocess(self, obj):
         self.pipeline.preprocess(obj)
         
-    def process(self, obj=None, filter=None):
+    def process(self, obj=None, filter=None, no_call=False):
         if obj:
             self.preprocess(obj)
         graph = self.pipeline.process(filter=filter)        
-        return self.output.generate(graph)
+        return self.output.generate(graph, no_call=no_call)
 
     def set_source(self, source):
         self.pipeline.set_source(source)

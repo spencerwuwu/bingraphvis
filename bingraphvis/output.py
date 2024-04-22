@@ -186,7 +186,7 @@ class DotOutput(Output):
             ret += "}\n"
         return ret
         
-    def generate(self, graph):
+    def generate(self, graph, no_call=False):
         ret  = "digraph \"\" {\n"
         ret += "rankdir=TB;\n"
         ret += "newrank=true;\n"
@@ -200,6 +200,10 @@ class DotOutput(Output):
         ret += self.generate_cluster(graph, None)
 
         for e in graph.edges:
+            if no_call and\
+                'jumpkind' in e.meta and\
+                e.meta['jumpkind'] in ['Ijk_Call', 'Ijk_Ret']:
+                continue
             ret += self.render_edge(e) + "\n"
             
         ret += "}\n"
